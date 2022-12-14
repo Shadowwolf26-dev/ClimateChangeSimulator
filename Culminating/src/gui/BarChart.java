@@ -29,13 +29,17 @@ public class BarChart extends JPanel
 
        int width = (getWidth() / bars.size());
        int x = 1;
-       for (Bar entry : bars.values())
+       for (String graph : bars.keySet())
        {
+           Bar entry = bars.get(graph);
            int value = entry.getValue();
            int height = (int) ((getHeight() - 5) * ((double) value / max));
            g.setColor(entry.getColor());
            g.fillRect(x, getHeight() - height, width, height);
            g.setColor(Color.BLACK);
+           String s = String.valueOf(value);
+           g.drawString(graph, (int) ((int) (x + (width * 0.5)) - (graph.length() * 0.5)), getHeight() - height);
+           g.drawString(s, ((int) (x + (width * 0.5)) - (s.length() * 4)), (int) (getHeight() - (height * 0.5)));
            g.drawRect(x, getHeight() - height, width, height);
            x += (width + 2);
        }

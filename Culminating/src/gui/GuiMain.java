@@ -10,7 +10,7 @@ public class GuiMain
     {
         JFrame frame = new JFrame("Climate Change Simulator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(900,900);
+        frame.setSize(1920,1080);
 
         JPanel rightPanel = new JPanel();
         JPanel leftPanel = new JPanel();
@@ -45,19 +45,18 @@ public class GuiMain
         frame.getContentPane().add(BorderLayout.NORTH, panel);
 
         BarChart barChart = new BarChart();
-        /*barChart.addBar("Population", Color.CYAN, 100);
-        barChart.addBar(Color.RED, 75);
-        barChart.addBar(Color.GREEN, 25);
-        barChart.addBar(Color.ORANGE, 50);
-        barChart.addBar(Color.MAGENTA, 10);
-        barChart.addBar(Color.PINK, 20);
-        barChart.addBar(Color.YELLOW, 15);
-        barChart.addBar(Color., 10);
-        barChart.addBar(Color.PINK, 20);
-        barChart.addBar(Color.YELLOW, 15);
-        barChart.addBar(Color.PINK, 20);
-        barChart.addBar(Color.YELLOW, 15);
-        barChart.setSize(400, 400);*/
+        barChart.addBar("Population", Color.CYAN, 100);
+        barChart.addBar("Education", Color.ORANGE, 75);
+        barChart.addBar("HDI", Color.GREEN, 25);
+        barChart.addBar("CO2", Color.RED, 50);
+        barChart.addBar("Poverty Rate", Color.BLUE, 10);
+        barChart.addBar("Accessibility", Color.PINK, 20);
+        barChart.addBar("Taxes", Color.YELLOW, 15);
+        barChart.addBar("Crime rate", Color.RED, 10);
+        barChart.addBar("Public Opinion", Color.CYAN, 20);
+        barChart.addBar("Happiness", Color.ORANGE, 15);
+        barChart.addBar("GDP", Color.BLUE, 20);
+        barChart.setSize(400, 400);
 
         frame.getContentPane().add(BorderLayout.CENTER, barChart);
 
