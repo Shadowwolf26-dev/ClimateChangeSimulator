@@ -18,6 +18,13 @@ public class BarChart extends JPanel
         repaint();
     }
 
+    public void updateBar(String name, Color color, int value)
+    {
+        Bar bar = new Bar(color, value);
+        bars.put(name, bar);
+        repaint();
+    }
+
     @Override
     protected void paintComponent(Graphics g)
     {
@@ -38,8 +45,9 @@ public class BarChart extends JPanel
            g.fillRect(x, getHeight() - height, width, height);
            g.setColor(Color.BLACK);
            String s = String.valueOf(value);
-           g.drawString(graph, (int) ((int) (x + (width * 0.5)) - (graph.length() * 0.5)), getHeight() - height);
-           g.drawString(s, ((int) (x + (width * 0.5)) - (s.length() * 4)), (int) (getHeight() - (height * 0.5)));
+           int labelPos = (int) ((x + (width * 0.5) - (graph.length()) * 2.75));
+           g.drawString(graph, labelPos, (int) (getHeight() - (height * 0.75)));
+           g.drawString(s, (int) (x + (width * 0.5)) - (s.length() * 4), (int) (getHeight() - (height * 0.5)));
            g.drawRect(x, getHeight() - height, width, height);
            x += (width + 2);
        }
