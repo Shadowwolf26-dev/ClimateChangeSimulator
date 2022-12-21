@@ -16,11 +16,13 @@ public class GuiMain
     private JPanel leftPanel;
     private JPanel rightPanel;
     private BarChart barChart = new BarChart();
+    private ValueUpdateSystem valueUpdateSystem = new ValueUpdateSystem(this);
 
     public GuiMain()
     {
         globalMap.put("Population", 100);
         globalMap.put("Education", 75);
+        globalMap.put("Research", 0);
         globalMap.put("HDI", 25);
         globalMap.put("CO2", 50);
         globalMap.put("Poverty", 10);
@@ -42,11 +44,11 @@ public class GuiMain
         panel.setSize(400, 400);
 
         populateBarChart();
-        barChart.setSize(400, 400);
+        barChart.setSize(400, 1000);
 
         rightPanel = new JPanel();
         leftPanel = new JPanel();
-        leftPanel.setLayout(new GridLayout(4, 1));
+        leftPanel.setLayout(new GridLayout(12, 1));
         rightPanel.setLayout(new GridLayout(5, 1));
 
         JButton rButton1 = new JButton("Build Schools! (+5 Education)");
@@ -85,12 +87,14 @@ public class GuiMain
         leftPanel.add(lButton4);
         lButton4.addActionListener(events);
 
-        /*frame.getContentPane().add(BorderLayout.WEST, leftPanel);
-        frame.getContentPane().add(BorderLayout.EAST, rightPanel);*/
+        for (Component c : rightPanel.getComponents())
+        {
+            leftPanel.add(c);
+        }
 
-        panel.add(BorderLayout.WEST, leftPanel);
-        panel.add(BorderLayout.CENTER, barChart);
-        panel.add(BorderLayout.EAST, rightPanel);
+        panel.add(BorderLayout.SOUTH, leftPanel);
+        panel.add(BorderLayout.NORTH, barChart);
+        //panel.add(BorderLayout.EAST, rightPanel);
 
         JPanel tPanel = new JPanel();
         tPanel.setSize(450, 75);
@@ -110,10 +114,12 @@ public class GuiMain
         {
             Integer newNumber = globalMap.get(entry.getKey());
             newNumber += entry.getValue();
-
-            globalMap.put(entry.getKey(), newNumber);
+            if (newNumber >= 100)
+                newNumber = 100;
+            else if (newNumber <= 0)
+                newNumber = 0;
+            valueUpdateSystem.updateAllValues(entry.getKey());
         }
-
     }
 
     private void populateBarChart()
@@ -128,6 +134,6 @@ public class GuiMain
     {
         populateBarChart();
         frame.repaint();
-        
+
     }
 }

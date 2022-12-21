@@ -11,6 +11,10 @@ public class BarChart extends JPanel
 {
     private Map<String, Bar> bars = new HashMap<>();
 
+    public BarChart()
+    {
+
+    }
     public void addBar(String name, Color color, int value)
     {
         Bar bar = new Bar(color, value);
@@ -28,7 +32,7 @@ public class BarChart extends JPanel
     @Override
     protected void paintComponent(Graphics g)
     {
-       int max = Integer.MIN_VALUE;
+        int max = Integer.MIN_VALUE;
        for (Bar entry : bars.values())
        {
            max = Math.max(max, entry.getValue());
