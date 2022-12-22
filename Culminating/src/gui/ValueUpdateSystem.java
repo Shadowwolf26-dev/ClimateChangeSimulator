@@ -5,7 +5,7 @@ public class ValueUpdateSystem
     public static final String[] topics = {"Education", "Research", "CO2", "Poverty", "Accessibility", "Tax",
             "Crime", "PO", "GDP"};
 
-    int education, research, co2, poverty, accessibility, taxRate, crimeRate, publicOpinion, GDP, hdi, happiness, population;
+    public int education, research, co2, poverty, accessibility, taxRate, crimeRate, publicOpinion, GDP, hdi, happiness, population;
     private GuiMain guiMain;
 
     public ValueUpdateSystem(GuiMain guiMain)
@@ -15,6 +15,18 @@ public class ValueUpdateSystem
 
     public void updateAllValues(String s)
     {
+        education = 0;
+        research = 0;
+        co2 = 0;
+        poverty = 0;
+        accessibility = 0;
+        taxRate = 0;
+        crimeRate = 0;
+        publicOpinion = 0;
+        GDP = 0;
+        hdi = 0;
+        happiness = 0;
+        population = 0;
         if (s.equals(topics[0]))
         {
             //Education
@@ -131,39 +143,40 @@ public class ValueUpdateSystem
         for (String string : topics)
         {
             int x = 0;
-            if (string.contains("Education"))
+            string = string.toLowerCase();
+            if (string.contains("education"))
             {
                 x = education;
             }
-            else if (string.contains("Research"))
+            else if (string.contains("research"))
             {
                 x = research;
             }
-            else if (string.contains("CO2"))
+            else if (string.contains("co2"))
             {
                 x = co2;
             }
-            else if (string.contains("Poverty"))
+            else if (string.contains("poverty"))
             {
                 x = poverty;
             }
-            else if (string.contains("Accessibility"))
+            else if (string.contains("accessibility"))
             {
                 x = accessibility;
             }
-            else if (string.contains("Tax"))
+            else if (string.contains("tax"))
             {
                 x = taxRate;
             }
-            else if (string.contains("Crime"))
+            else if (string.contains("crime"))
             {
                 x = crimeRate;
             }
-            else if (string.contains("PO"))
+            else if (string.contains("po"))
             {
                 x = publicOpinion;
             }
-            else if (string.contains("GDP"))
+            else if (string.contains("gdp"))
             {
                 x = GDP;
             }

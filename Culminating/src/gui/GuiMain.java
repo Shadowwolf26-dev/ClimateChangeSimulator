@@ -1,6 +1,6 @@
 package gui;
 
-import util.Bar;
+import util.Data;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,10 +11,10 @@ public class GuiMain
 {
     private Events events = new Events(this);
     public Map<String, Integer> globalMap = new HashMap<>();
+    public Data currentData;
     private JFrame frame;
     private JPanel panel;
-    private JPanel leftPanel;
-    private JPanel rightPanel;
+    private JPanel buttonPanel;
     private BarChart barChart = new BarChart();
     private ValueUpdateSystem valueUpdateSystem = new ValueUpdateSystem(this);
 
@@ -32,6 +32,7 @@ public class GuiMain
         globalMap.put("PO", 20);
         globalMap.put("Happiness", 15);
         globalMap.put("GDP", 20);
+        currentData = new Data(100, 75, 0, 25, 50, 10, 20, 15 ,10 ,20 ,15, 20);
     }
     public void main()
     {
@@ -46,56 +47,48 @@ public class GuiMain
         populateBarChart();
         barChart.setSize(400, 1000);
 
-        rightPanel = new JPanel();
-        leftPanel = new JPanel();
-        leftPanel.setLayout(new GridLayout(12, 1));
-        rightPanel.setLayout(new GridLayout(5, 1));
+        buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(6, 2));
 
         JButton rButton1 = new JButton("Build Schools! (+5 Education)");
-        rightPanel.add(rButton1);
+        buttonPanel.add(rButton1);
         rButton1.addActionListener(events);
 
         JButton rButton2 = new JButton("Invest in Research (+1 Research)");
-        rightPanel.add(rButton2);
+        buttonPanel.add(rButton2);
         rButton2.addActionListener(events);
 
         JButton rButton3 = new JButton("Increase Green Energy Spending. (-5 CO2)");
-        rightPanel.add(rButton3);
+        buttonPanel.add(rButton3);
         rButton3.addActionListener(events);
 
         JButton rButton4 = new JButton("Create Jobs and Build Shelters. (-5 Poverty)");
-        rightPanel.add(rButton4);
+        buttonPanel.add(rButton4);
         rButton4.addActionListener(events);
 
         JButton rButton5 = new JButton("Equity Spending (+10 Accessibility)");
-        rightPanel.add(rButton5);
+        buttonPanel.add(rButton5);
         rButton5.addActionListener(events);
 
         JButton lButton1 = new JButton("Lower Tax Rate (-1 Tax Rate)");
-        leftPanel.add(lButton1);
+        buttonPanel.add(lButton1);
         lButton1.addActionListener(events);
 
         JButton lButton2 = new JButton("Increase Security. (-5 Crime Rate)");
-        leftPanel.add(lButton2);
+        buttonPanel.add(lButton2);
         lButton2.addActionListener(events);
 
-        JButton lButton3 = new JButton("Post a Meme (+1 Public Opinion)");
-        leftPanel.add(lButton3);
+        JButton lButton3 = new JButton("Post a Meme (+1 PO)");
+        buttonPanel.add(lButton3);
         lButton3.addActionListener(events);
 
         JButton lButton4 = new JButton("Build Factory (+5 GDP)");
-        leftPanel.add(lButton4);
+        buttonPanel.add(lButton4);
         lButton4.addActionListener(events);
 
-        for (Component c : rightPanel.getComponents())
-        {
-            leftPanel.add(c);
-        }
+        frame.getContentPane().add(BorderLayout.SOUTH, buttonPanel);
 
-        panel.add(BorderLayout.SOUTH, leftPanel);
-        panel.add(BorderLayout.NORTH, barChart);
-        //panel.add(BorderLayout.EAST, rightPanel);
-
+        panel.add(BorderLayout.CENTER, barChart);
         JPanel tPanel = new JPanel();
         tPanel.setSize(450, 75);
         frame.getContentPane().add(BorderLayout.NORTH, tPanel);
@@ -134,6 +127,8 @@ public class GuiMain
     {
         populateBarChart();
         frame.repaint();
+
+        currentData = new Data(globalMap.values().stream().toList());
 
     }
 }

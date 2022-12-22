@@ -1,6 +1,8 @@
 package gui;
 
 import com.sun.tools.javac.Main;
+import systems.GameEventManager;
+import util.Data;
 
 import java.awt.event.ActionEvent;
 import java.util.HashMap;
@@ -10,9 +12,11 @@ import java.util.Map;
 public class Events implements java.awt.event.ActionListener
 {
     private GuiMain guiMain;
+    private GameEventManager gameEventManager;
     public Events(GuiMain guiMain)
     {
         this.guiMain = guiMain;
+        gameEventManager = new GameEventManager(guiMain);
     }
 
     private final String[] topics = {"Education", "Research", "CO2", "Poverty", "Accessibility", "Tax",
@@ -52,6 +56,16 @@ public class Events implements java.awt.event.ActionListener
         }
 
 
+    }
+
+    private void checkConditions()
+    {
+        Map<Data.Type, Integer> dataMap = gameEventManager.nextDay();
+
+        for (Data.Type type : dataMap.keySet())
+        {
+           String s = type.name();
+        }
     }
 
     private void updateData(String topic, int change)
