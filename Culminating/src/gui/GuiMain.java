@@ -20,18 +20,18 @@ public class GuiMain
 
     public GuiMain()
     {
-        globalMap.put("Population", 100);
-        globalMap.put("Education", 75);
-        globalMap.put("Research", 0);
-        globalMap.put("HDI", 25);
-        globalMap.put("CO2", 50);
-        globalMap.put("Poverty", 10);
-        globalMap.put("Accessibility", 20);
-        globalMap.put("Tax", 15);
-        globalMap.put("Crime", 10);
-        globalMap.put("PO", 20);
-        globalMap.put("Happiness", 15);
-        globalMap.put("GDP", 20);
+        globalMap.put("population", 100);
+        globalMap.put("education", 75);
+        globalMap.put("research", 0);
+        globalMap.put("hdi", 25);
+        globalMap.put("co2", 50);
+        globalMap.put("poverty", 10);
+        globalMap.put("accessibility", 20);
+        globalMap.put("tax", 15);
+        globalMap.put("crime", 10);
+        globalMap.put("po", 20);
+        globalMap.put("happiness", 15);
+        globalMap.put("gdp", 20);
         currentData = new Data(100, 75, 0, 25, 50, 10, 20, 15 ,10 ,20 ,15, 20);
     }
     public void main()
@@ -105,12 +105,6 @@ public class GuiMain
     {
         for (Map.Entry<String, Integer> entry : updateMap.entrySet())
         {
-            Integer newNumber = globalMap.get(entry.getKey());
-            newNumber += entry.getValue();
-            if (newNumber >= 100)
-                newNumber = 100;
-            else if (newNumber <= 0)
-                newNumber = 0;
             valueUpdateSystem.updateAllValues(entry.getKey());
         }
     }
@@ -119,16 +113,22 @@ public class GuiMain
     {
         for (Map.Entry<String, Integer> entry : globalMap.entrySet())
         {
-            barChart.updateBar(entry.getKey(), Color.CYAN, entry.getValue());
+            barChart.updateBar(entry.getKey(), Color.GREEN, entry.getValue());
         }
     }
 
     public void updateGUI()
     {
         populateBarChart();
+        System.out.println("-------");
         frame.repaint();
 
-        currentData = new Data(globalMap.values().stream().toList());
+        currentData = new Data(globalMap.values());
 
+    }
+
+    public void refreshGlobal(Map<String, Integer> changeMap)
+    {
+        globalMap.putAll(changeMap);
     }
 }

@@ -1,5 +1,6 @@
 package util;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +12,7 @@ public class Data
     public Data(int population, int education, int research, int co2, int poverty, int accessibility, int taxRate,
                 int crimeRate, int publicOpinion, int GDP, int hdi, int happiness)
     {
-        dataMap.put(Type.Education, education);
+        dataMap.put(Type.EDUCATION, education);
         dataMap.put(Type.RESEARCH, research);
         dataMap.put(Type.CO2, co2);
         dataMap.put(Type.POVERTY, poverty);
@@ -26,11 +27,14 @@ public class Data
     }
 
 
-    public Data(List<Integer> dataList)
+    public Data(Collection<Integer> dl)
     {
-        if (dataList.size() < 11)
+        if (dl.size() < 11)
             return;
-        dataMap.put(Type.Education, dataList.get(0));
+
+        List<Integer> dataList = dl.stream().toList();
+        System.out.println(dataList);
+        dataMap.put(Type.EDUCATION, dataList.get(0));
         dataMap.put(Type.RESEARCH, dataList.get(1));
         dataMap.put(Type.CO2, dataList.get(2));
         dataMap.put(Type.POVERTY, dataList.get(3));
@@ -47,7 +51,7 @@ public class Data
 
     public enum Type
     {
-        Education,
+        EDUCATION,
         RESEARCH,
         CO2,
         POVERTY,

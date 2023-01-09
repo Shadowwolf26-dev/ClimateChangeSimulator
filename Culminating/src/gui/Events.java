@@ -1,6 +1,5 @@
 package gui;
 
-import com.sun.tools.javac.Main;
 import systems.GameEventManager;
 import util.Data;
 
@@ -24,7 +23,6 @@ public class Events implements java.awt.event.ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
-
         String s = e.getActionCommand();
         String topic = "";
         int change = 0;
@@ -50,11 +48,60 @@ public class Events implements java.awt.event.ActionListener
                 if (negative)
                     change *= -1;
 
-                updateData(topic, change);
+                updateData(topic.toLowerCase(), change);
                 break;
             }
         }
 
+        Map<String, Integer> newChangeMap = new HashMap<>();
+        Map<Data.Type, Integer> nextDayMap = gameEventManager.nextDay();
+        for (Data.Type type : nextDayMap.keySet())
+        {
+            String name = "";
+
+            switch (type)
+            {
+                case EDUCATION:
+                    name = "education";
+                    break;
+                case RESEARCH:
+                    name = "research";
+                    break;
+                case CO2:
+                    name = "co2";
+                    break;
+                case POVERTY:
+                    name = "poverty";
+                    break;
+                case ACCESSIBILITY:
+                    name = "accessibility";
+                    break;
+                case TAX_RATE:
+                    name = "tax";
+                    break;
+                case CRIME_RATE:
+                    name = "crime";
+                    break;
+                case PUBLIC_OPINION:
+                    name = "po";
+                    break;
+                case GDP:
+                    name = "gdp";
+                    break;
+                case HDI:
+                    name = "hdi";
+                    break;
+                case HAPPINESS:
+                    name = "happiness";
+                    break;
+                case POPULATION:
+                    name = "population";
+                    break;
+            }
+
+            newChangeMap.put(name, nextDayMap.get(type));
+        }
+        updateDataMap(newChangeMap);
 
     }
 
@@ -73,10 +120,16 @@ public class Events implements java.awt.event.ActionListener
         Map<String, Integer> changeMap = new HashMap<>();
         changeMap.put(topic, change);
 
-        System.out.println(topic + " | " + change);
+       // System.out.println(topic + " | " + change);
 
         guiMain.updateBarChart(changeMap);
         guiMain.updateGUI();
 
+    }
+
+    private void updateDataMap(Map<String, Integer> changeMap)
+    {
+        guiMain.refreshGlobal(changeMap);
+        guiMain.updateGUI();
     }
 }

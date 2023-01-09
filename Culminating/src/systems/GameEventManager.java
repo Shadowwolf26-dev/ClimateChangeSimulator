@@ -1,10 +1,8 @@
 package systems;
 
 import gui.GuiMain;
-import gui.ValueUpdateSystem;
 import util.Data;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -58,7 +56,7 @@ public class GameEventManager
         }
         if (dataMap.get(Data.Type.CRIME_RATE) >= 90)
         {
-            dataMap.put(Data.Type.Education, dataMap.get(Data.Type.Education) - 10);
+            dataMap.put(Data.Type.EDUCATION, dataMap.get(Data.Type.EDUCATION) - 10);
             dataMap.put(Data.Type.HAPPINESS, dataMap.get(Data.Type.HAPPINESS) - 50);
             dataMap.put(Data.Type.PUBLIC_OPINION, dataMap.get(Data.Type.PUBLIC_OPINION) - 50);
             dataMap.put(Data.Type.GDP, dataMap.get(Data.Type.GDP) - 30);
@@ -74,6 +72,8 @@ public class GameEventManager
             dataMap.put(Data.Type.GDP, dataMap.get(Data.Type.GDP) + 10);
 
         }
+
+        System.out.print(dataMap);
 
         return dataMap;
     }

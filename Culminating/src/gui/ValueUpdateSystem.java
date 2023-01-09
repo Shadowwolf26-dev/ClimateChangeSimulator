@@ -2,8 +2,8 @@ package gui;
 
 public class ValueUpdateSystem
 {
-    public static final String[] topics = {"Education", "Research", "CO2", "Poverty", "Accessibility", "Tax",
-            "Crime", "PO", "GDP"};
+    public static final String[] topics = {"education", "research", "co2", "poverty", "accessibility", "tax",
+            "crime", "po", "gdp"};
 
     public int education, research, co2, poverty, accessibility, taxRate, crimeRate, publicOpinion, GDP, hdi, happiness, population;
     private GuiMain guiMain;
@@ -144,6 +144,7 @@ public class ValueUpdateSystem
         {
             int x = 0;
             string = string.toLowerCase();
+            System.out.println(string);
             if (string.contains("education"))
             {
                 x = education;
@@ -188,7 +189,7 @@ public class ValueUpdateSystem
             else if (x <= 0)
                 x = 0;
 
-            guiMain.globalMap.put(string, x);
+            guiMain.globalMap.put(string.toLowerCase(), x);
         }
     }
 }
