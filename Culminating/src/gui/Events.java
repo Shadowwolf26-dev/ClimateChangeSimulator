@@ -19,10 +19,11 @@ public class Events implements java.awt.event.ActionListener
     }
 
     private final String[] topics = {"Education", "Research", "CO2", "Poverty", "Accessibility", "Tax",
-                                        "Crime", "PO", "GDP"};
+                                        "Crime", "PO", "Population","GDP"};
     @Override
     public void actionPerformed(ActionEvent e)
     {
+        System.out.println(guiMain.currentData.dataMap);
         String s = e.getActionCommand();
         String topic = "";
         int change = 0;
@@ -52,6 +53,8 @@ public class Events implements java.awt.event.ActionListener
                 break;
             }
         }
+
+        System.out.println(guiMain.currentData.dataMap);
 
         Map<String, Integer> newChangeMap = new HashMap<>();
         Map<Data.Type, Integer> nextDayMap = gameEventManager.nextDay();
@@ -100,9 +103,11 @@ public class Events implements java.awt.event.ActionListener
             }
 
             newChangeMap.put(name, nextDayMap.get(type));
+            System.out.println(newChangeMap);
         }
-        updateDataMap(newChangeMap);
+        updateDataMap(newChangeMap, nextDayMap);
 
+        System.out.println(guiMain.currentData.dataMap);
     }
 
     private void checkConditions()
@@ -120,16 +125,16 @@ public class Events implements java.awt.event.ActionListener
         Map<String, Integer> changeMap = new HashMap<>();
         changeMap.put(topic, change);
 
-       // System.out.println(topic + " | " + change);
+        //System.out.println(topic + " | " + change);
 
         guiMain.updateBarChart(changeMap);
         guiMain.updateGUI();
 
     }
 
-    private void updateDataMap(Map<String, Integer> changeMap)
+    private void updateDataMap(Map<String, Integer> changeMap, Map<Data.Type, Integer> changeMapEnum)
     {
-        guiMain.refreshGlobal(changeMap);
+        guiMain.refreshGlobal(changeMap, changeMapEnum);
         guiMain.updateGUI();
     }
 }

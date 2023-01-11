@@ -3,7 +3,7 @@ package gui;
 public class ValueUpdateSystem
 {
     public static final String[] topics = {"education", "research", "co2", "poverty", "accessibility", "tax",
-            "crime", "po", "gdp"};
+            "crime", "po", "gdp", "population"};
 
     public int education, research, co2, poverty, accessibility, taxRate, crimeRate, publicOpinion, GDP, hdi, happiness, population;
     private GuiMain guiMain;
@@ -57,7 +57,7 @@ public class ValueUpdateSystem
         {
             //Warming
             education += 5;
-            co2 -= 1;
+            co2 -= 5;
             poverty -= 1;
             accessibility += 1;
             taxRate += 5;
@@ -85,11 +85,11 @@ public class ValueUpdateSystem
             education += 1;
             hdi += 1;
             poverty -= 1;
-            taxRate += 5;
+            taxRate += 1;
             publicOpinion += 5;
             happiness += 1;
 
-            GDP -= 10;
+            GDP -= 5;
         }
         else if (s.contains(topics[5]))
         {
@@ -123,9 +123,9 @@ public class ValueUpdateSystem
             publicOpinion += 1;
             hdi += 1;
             crimeRate -= 5;
-            happiness += 1;
+            happiness += 5;
 
-            GDP -= 5;
+            GDP -= 1;
         }
         else if (s.contains(topics[8]))
         {
@@ -135,7 +135,7 @@ public class ValueUpdateSystem
             education -= 1;
             hdi -= 1;
             co2 += 10;
-            poverty += 5;
+            poverty -= 5;
             accessibility -= 1;
 
         }
@@ -144,7 +144,10 @@ public class ValueUpdateSystem
         {
             int x = 0;
             string = string.toLowerCase();
-            System.out.println(string);
+            if (string.contains("population"))
+            {
+                x = population;
+            }
             if (string.contains("education"))
             {
                 x = education;
@@ -182,7 +185,10 @@ public class ValueUpdateSystem
                 x = GDP;
             }
 
+           // System.out.println("[A] " + string + " | " + x);
             x += guiMain.globalMap.get(string);
+            //System.out.println("[B] " + string + " | " + x);
+
 
             if (x >= 100)
                 x = 100;
@@ -191,5 +197,6 @@ public class ValueUpdateSystem
 
             guiMain.globalMap.put(string.toLowerCase(), x);
         }
+        System.out.println(guiMain.globalMap);
     }
 }

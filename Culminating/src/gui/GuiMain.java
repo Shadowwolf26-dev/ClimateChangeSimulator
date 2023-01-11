@@ -13,26 +13,26 @@ public class GuiMain
     public Map<String, Integer> globalMap = new HashMap<>();
     public Data currentData;
     private JFrame frame;
-    private JPanel panel;
-    private JPanel buttonPanel;
+    public JLabel text;
     private BarChart barChart = new BarChart();
-    private ValueUpdateSystem valueUpdateSystem = new ValueUpdateSystem(this);
+    private final ValueUpdateSystem valueUpdateSystem = new ValueUpdateSystem(this);
 
     public GuiMain()
     {
-        globalMap.put("population", 100);
-        globalMap.put("education", 75);
+        globalMap.put("population", 75);
+        globalMap.put("education", 25);
         globalMap.put("research", 0);
-        globalMap.put("hdi", 25);
+        globalMap.put("hdi", 50);
         globalMap.put("co2", 50);
-        globalMap.put("poverty", 10);
-        globalMap.put("accessibility", 20);
+        globalMap.put("poverty", 5);
+        globalMap.put("accessibility", 25);
         globalMap.put("tax", 15);
-        globalMap.put("crime", 10);
-        globalMap.put("po", 20);
-        globalMap.put("happiness", 15);
-        globalMap.put("gdp", 20);
-        currentData = new Data(100, 75, 0, 25, 50, 10, 20, 15 ,10 ,20 ,15, 20);
+        globalMap.put("crime", 5);
+        globalMap.put("po", 50);
+        globalMap.put("happiness", 50);
+        globalMap.put("gdp", 50);
+        currentData = new Data(75, 25, 0, 50, 5, 25, 15, 5 ,50 ,50 ,50, 50);
+        System.out.println(currentData.dataMap);
     }
     public void main()
     {
@@ -40,14 +40,14 @@ public class GuiMain
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1920,1080);
 
-        panel = new JPanel();
+        JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(1, 3));
         panel.setSize(400, 400);
 
         populateBarChart();
         barChart.setSize(400, 1000);
 
-        buttonPanel = new JPanel();
+        JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(6, 2));
 
         JButton rButton1 = new JButton("Build Schools! (+5 Education)");
@@ -93,7 +93,7 @@ public class GuiMain
         tPanel.setSize(450, 75);
         frame.getContentPane().add(BorderLayout.NORTH, tPanel);
 
-        JLabel text = new JLabel("Welcome to Climate Change Simulator!");
+        text = new JLabel("Welcome to Climate Change Simulator!");
         text.setFont(new Font("Serif", Font.PLAIN, 24));
         tPanel.add(BorderLayout.NORTH, text);
 
@@ -107,28 +107,37 @@ public class GuiMain
         {
             valueUpdateSystem.updateAllValues(entry.getKey());
         }
+        System.out.println(currentData.dataMap);
     }
 
     private void populateBarChart()
     {
         for (Map.Entry<String, Integer> entry : globalMap.entrySet())
         {
-            barChart.updateBar(entry.getKey(), Color.GREEN, entry.getValue());
+            int num = entry.getValue();
+
+            if (num >= 100)
+                num = 100;
+            else if (num <= 0)
+                num = 0;
+            barChart.updateBar(entry.getKey(), Color.CYAN, num);
         }
     }
 
     public void updateGUI()
     {
         populateBarChart();
-        System.out.println("-------");
         frame.repaint();
 
-        currentData = new Data(globalMap.values());
+        currentData = new Data(globalMap);
+
+        System.out.println(currentData.dataMap);
 
     }
 
-    public void refreshGlobal(Map<String, Integer> changeMap)
+    public void refreshGlobal(Map<String, Integer> changeMap, Map<Data.Type, Integer> changeMapEnum)
     {
         globalMap.putAll(changeMap);
+        currentData.dataMap.putAll(changeMapEnum);
     }
 }

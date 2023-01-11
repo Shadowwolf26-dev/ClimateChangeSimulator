@@ -48,6 +48,27 @@ public class Data
         dataMap.put(Type.POPULATION, dataList.get(11));
     }
 
+    public Data(Map<String, Integer> map)
+    {
+        for (Map.Entry<String, Integer> entry : map.entrySet())
+        {
+            switch (entry.getKey())
+            {
+                case "population" -> dataMap.put(Type.POPULATION, entry.getValue());
+                case "education" -> dataMap.put(Type.EDUCATION, entry.getValue());
+                case "research" -> dataMap.put(Type.RESEARCH, entry.getValue());
+                case "hdi" -> dataMap.put(Type.HDI, entry.getValue());
+                case "co2" -> dataMap.put(Type.CO2, entry.getValue());
+                case "poverty" -> dataMap.put(Type.POVERTY, entry.getValue());
+                case "accessibility" -> dataMap.put(Type.ACCESSIBILITY, entry.getValue());
+                case "tax" -> dataMap.put(Type.TAX_RATE, entry.getValue());
+                case "crime" -> dataMap.put(Type.CRIME_RATE, entry.getValue());
+                case "po" -> dataMap.put(Type.PUBLIC_OPINION, entry.getValue());
+                case "happiness" -> dataMap.put(Type.HAPPINESS, entry.getValue());
+                case "gdp" -> dataMap.put(Type.GDP, entry.getValue());
+            }
+        }
+    }
 
     public enum Type
     {
