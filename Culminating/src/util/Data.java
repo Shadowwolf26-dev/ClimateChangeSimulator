@@ -7,6 +7,11 @@ import java.util.Map;
 
 public class Data
 {
+    /*
+    * Data class that contains an ENUM and
+    * serializes data into a map (dataMap).
+    * Transfer strings into ENUM format
+    * */
     public Map<Type, Integer> dataMap = new HashMap<>();
 
     public Data(int population, int education, int research, int co2, int poverty, int accessibility, int taxRate,

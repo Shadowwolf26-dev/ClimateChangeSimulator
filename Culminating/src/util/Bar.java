@@ -4,6 +4,10 @@ import java.awt.*;
 
 public class Bar
 {
+    /*
+    * Bar method that stores all the values necessary
+    * for a Bar in the BarChart object
+    * */
     private Color color;
     private int value;
 

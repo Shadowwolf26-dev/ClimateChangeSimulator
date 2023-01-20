@@ -1,29 +1,40 @@
 package gui;
 
+import data.DataFile;
 import systems.GameEventManager;
 import util.Data;
 
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Events implements java.awt.event.ActionListener
 {
+    //Instantiates Reference Objects
     private GuiMain guiMain;
     private GameEventManager gameEventManager;
-    public Events(GuiMain guiMain)
+    private DataFile dataFile;
+
+    //Instantiates topics list
+    private final String[] topics = {"Education", "Research", "CO2", "Poverty", "Accessibility", "Tax",
+            "Crime", "PO", "Population","GDP"};
+    public Events(GuiMain guiMain, DataFile dataFile)
     {
+        //Constructor for event handler class.
+
+        this.dataFile = dataFile;
         this.guiMain = guiMain;
         gameEventManager = new GameEventManager(guiMain);
     }
 
-    private final String[] topics = {"Education", "Research", "CO2", "Poverty", "Accessibility", "Tax",
-                                        "Crime", "PO", "Population","GDP"};
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        System.out.println(guiMain.currentData.dataMap);
+        //NOTE: THIS FUNCTION IS NOT BLOCK COMMENTED AS IT IS MORE COMPLEX THAN OTHER FUNCTIONS;
+        //IT IS INSTEAD COMMENTED LINE BY LINE.
+        //Detects when a button is clicked
         String s = e.getActionCommand();
         String topic = "";
         int change = 0;
@@ -31,6 +42,7 @@ public class Events implements java.awt.event.ActionListener
 
         for (String t : topics)
         {
+            //Checks the name of the button and sees if it matches the topics
             if (s.contains(t))
             {
                 topic = t;
@@ -49,17 +61,18 @@ public class Events implements java.awt.event.ActionListener
                 if (negative)
                     change *= -1;
 
+                //Splits Strings to determine the increase value and updates accordingly
                 updateData(topic.toLowerCase(), change);
                 break;
             }
         }
 
-        System.out.println(guiMain.currentData.dataMap);
-
+        //Creates maps that will be populated with new data
         Map<String, Integer> newChangeMap = new HashMap<>();
         Map<Data.Type, Integer> nextDayMap = gameEventManager.nextDay();
         for (Data.Type type : nextDayMap.keySet())
         {
+            //Updates newDataMap(s)
             String name = "";
 
             switch (type)
@@ -103,29 +116,27 @@ public class Events implements java.awt.event.ActionListener
             }
 
             newChangeMap.put(name, nextDayMap.get(type));
-            System.out.println(newChangeMap);
         }
         updateDataMap(newChangeMap, nextDayMap);
 
-        System.out.println(guiMain.currentData.dataMap);
-    }
-
-    private void checkConditions()
-    {
-        Map<Data.Type, Integer> dataMap = gameEventManager.nextDay();
-
-        for (Data.Type type : dataMap.keySet())
+        //Save's data if the program has not ended
+        if (gameEventManager.isDead())
+            return;
+        try
         {
-           String s = type.name();
+            dataFile.saveData(guiMain.currentData);
+        }
+        catch (IOException ex)
+        {
+            throw new RuntimeException(ex);
         }
     }
 
     private void updateData(String topic, int change)
     {
+        //Updates a topic and its bar on the gui
         Map<String, Integer> changeMap = new HashMap<>();
         changeMap.put(topic, change);
-
-        //System.out.println(topic + " | " + change);
 
         guiMain.updateBarChart(changeMap);
         guiMain.updateGUI();
@@ -134,6 +145,7 @@ public class Events implements java.awt.event.ActionListener
 
     private void updateDataMap(Map<String, Integer> changeMap, Map<Data.Type, Integer> changeMapEnum)
     {
+        //Update the entire dataMap in the guiMain object
         guiMain.refreshGlobal(changeMap, changeMapEnum);
         guiMain.updateGUI();
     }

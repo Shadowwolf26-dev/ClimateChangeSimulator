@@ -2,12 +2,17 @@ package gui;
 
 public class ValueUpdateSystem
 {
+    //Instantiates static final topic list
     public static final String[] topics = {"education", "research", "co2", "poverty", "accessibility", "tax",
             "crime", "po", "gdp", "population"};
 
+    //Instantiates all variables that need to be used
     public int education, research, co2, poverty, accessibility, taxRate, crimeRate, publicOpinion, GDP, hdi, happiness, population;
+
+    //Reference to GUIMain
     private GuiMain guiMain;
 
+    //Constructor for this object
     public ValueUpdateSystem(GuiMain guiMain)
     {
         this.guiMain = guiMain;
@@ -15,6 +20,10 @@ public class ValueUpdateSystem
 
     public void updateAllValues(String s)
     {
+        /*
+        * Function that updates all variables based on a particular string
+        * Values are based on planning (altered for balancing)
+        */
         education = 0;
         research = 0;
         co2 = 0;
@@ -32,8 +41,7 @@ public class ValueUpdateSystem
             //Education
             population -= 1;
             education += 5;
-            research += 1;
-            hdi += 1;
+            hdi += 5;
             poverty -= 1;
             accessibility += 3;
             taxRate += 5;
@@ -44,20 +52,19 @@ public class ValueUpdateSystem
         else if (s.contains(topics[1]))
         {
             //Research
-            research += 1;
+            research += 2;
             education += 5;
             hdi += 5;
-            co2 += 5;
-            poverty -= 1;
+            co2 += 1;
+            poverty -= 3;
             accessibility += 2;
-            taxRate += 10;
+            taxRate += 2;
             GDP += 5;
         }
         else if (s.contains(topics[2]))
         {
             //Warming
-            education += 5;
-            co2 -= 5;
+            co2 -= 10;
             poverty -= 1;
             accessibility += 1;
             taxRate += 5;
@@ -69,10 +76,12 @@ public class ValueUpdateSystem
             //Poverty
             hdi += 1;
             poverty -= 1;
+            hdi += 5;
             accessibility += 1;
             crimeRate -= 1;
             publicOpinion -= 1;
             happiness += 1;
+            taxRate += 1;
 
             GDP -= 5;
         }
@@ -83,7 +92,7 @@ public class ValueUpdateSystem
 
             population += 5;
             education += 1;
-            hdi += 1;
+            hdi += 10;
             poverty -= 1;
             taxRate += 1;
             publicOpinion += 5;
@@ -94,7 +103,7 @@ public class ValueUpdateSystem
         else if (s.contains(topics[5]))
         {
             //Tax
-            taxRate -= 1;
+            taxRate -= 2;
 
             population += 1;
             poverty -= 1;
@@ -109,11 +118,13 @@ public class ValueUpdateSystem
         {
             //Crime Rate
 
+            crimeRate -= 5;
             population += 1;
             hdi += 1;
             poverty -= 1;
             publicOpinion -= 1;
             happiness += 5;
+            taxRate += 3;
 
         }
         else if (s.contains(topics[7]))
@@ -124,6 +135,7 @@ public class ValueUpdateSystem
             hdi += 1;
             crimeRate -= 5;
             happiness += 5;
+            education -= 1;
 
             GDP -= 1;
         }
@@ -134,8 +146,9 @@ public class ValueUpdateSystem
             GDP += 5;
             education -= 1;
             hdi -= 1;
-            co2 += 10;
+            co2 += 5;
             poverty -= 5;
+            taxRate -= 5;
             accessibility -= 1;
 
         }
@@ -185,18 +198,16 @@ public class ValueUpdateSystem
                 x = GDP;
             }
 
-           // System.out.println("[A] " + string + " | " + x);
             x += guiMain.globalMap.get(string);
-            //System.out.println("[B] " + string + " | " + x);
 
-
+            //Caps values
             if (x >= 100)
                 x = 100;
             else if (x <= 0)
                 x = 0;
 
+            //Updates Global Map
             guiMain.globalMap.put(string.toLowerCase(), x);
         }
-        System.out.println(guiMain.globalMap);
     }
 }
